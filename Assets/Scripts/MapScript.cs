@@ -15,12 +15,15 @@ public class MapScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
+		Vector3 mousePosition = Input.mousePosition;
+		mousePosition.z = 450f;
 		if (Input.GetMouseButtonDown (0)) {
-			Debug.Log(camera.ViewportToWorldPoint(Input.mousePosition));
-			barrels[counter].transform.Translate(camera.ScreenToWorldPoint(Input.mousePosition));
-			if(counter < 11)
+			Debug.Log (camera.ScreenToWorldPoint (mousePosition));
+			Debug.Log("Current counter value :: "+ counter);
+			barrels[counter].transform.Translate(camera.ScreenToWorldPoint(mousePosition));
+			if(counter < 11){
 				counter = counter + 1;
-
+			}
 		}
 	}
 }

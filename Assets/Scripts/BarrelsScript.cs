@@ -5,11 +5,11 @@ public class BarrelsScript : MonoBehaviour {
 
 	public GameObject barrelPrefab;
 	public Canvas canvas;
+	public Material redColorBarrelMaterial;
 
 	private GameObject[] barrels = new GameObject[12];
 	private GameObject barrel;
 	private ClickBarrel[] clickBarrel;
-	private int activateUI = 0;
 	private angleScript angScript;
 	private float[] angle = new float[12];
 
@@ -43,13 +43,17 @@ public class BarrelsScript : MonoBehaviour {
 		}
 	}
 
+	void changeColor(GameObject blueBarrel){
+		MeshRenderer mesh = blueBarrel.GetComponentInChildren<MeshRenderer> ();
+		mesh.material = redColorBarrelMaterial;
+	}
+
 	// Update is called once per frame
 	void Update () {
 		int selectedBarrelIndex;
 		foreach (ClickBarrel clicked in clickBarrel) {
 			if(clicked.barrelFound == 1){
 				barrel = clicked.gameObject;
-				activateUI = 1;
 				canvas.enabled = true;
 				clicked.barrelFound = 0;
 				selectedBarrelIndex = int.Parse(clicked.gameObject.name);
@@ -58,6 +62,9 @@ public class BarrelsScript : MonoBehaviour {
 				}else{
 					Debug.Log("Error in angleScript!");
 				}
+				changeColor(barrel);
+				barrel.layer = 8;
+				clicked.barrelFound = 0;
 				break;
 			}
 		}

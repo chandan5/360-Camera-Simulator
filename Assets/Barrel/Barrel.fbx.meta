@@ -3,7 +3,15 @@ guid: 82fa7b7c287729a40add651099701bf7
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
+    100000: Barrel
+    100002: //RootNode
+    400000: Barrel
+    400002: //RootNode
+    2300000: Barrel
+    3300000: Barrel
     4300000: Barrel
+    6400000: Barrel
+    11100000: //RootNode
   materials:
     importMaterials: 1
     materialName: 3
@@ -13,6 +21,10 @@ ModelImporter:
     bakeSimulation: 0
     optimizeGameObjects: 0
     motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
     animationCompression: 1
     animationRotationError: .5
     animationPositionError: .5
@@ -25,7 +37,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 1

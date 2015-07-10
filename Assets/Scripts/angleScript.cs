@@ -13,6 +13,7 @@ public class angleScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		Canvas canvas;
 		Vector2 mousePositon;
 		Vector2 rectangleTransformOfPoint;
 		Vector2 clickVector;
@@ -25,6 +26,8 @@ public class angleScript : MonoBehaviour {
 			clickVector = rectangleTransformOfPoint - new Vector2(0f,0f);
 			angle = Vector2.Angle(reference,clickVector);
 			Debug.Log("The angle is " + angle);
+			canvas = GetComponentInParent<Canvas>();
+			canvas.enabled = false;
 		}
 	
 	}

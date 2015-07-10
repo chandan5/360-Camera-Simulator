@@ -11,8 +11,8 @@ public class BehaviourScript : MonoBehaviour {
 		verticalTranslation *= Time.deltaTime;
 		horizontalTranslation *= Time.deltaTime;
 		
-		transform.Translate(0, 0, verticalTranslation);
-		transform.Translate(horizontalTranslation, 0, 0);
+		transform.Translate(0, 0, verticalTranslation*20);
+		transform.Translate(horizontalTranslation*20, 0, 0);
 //		float h = horizontalSpeed * Input.GetAxis("Mouse X");
 //		transform.Rotate(0, h, 0);
 	}

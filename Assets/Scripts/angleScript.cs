@@ -3,10 +3,12 @@ using System.Collections;
 
 public class angleScript : MonoBehaviour {
 	private RectTransform rectangle;
+	public float angle;
 	// Use this for initialization
 	void Start () {
 //		Debug.Log ("The gameobject coordinates are " + gameObject.transform.position);
 		rectangle = gameObject.GetComponent<RectTransform> ();
+		angle = 9999f;
 	}
 	
 	// Update is called once per frame
@@ -15,7 +17,6 @@ public class angleScript : MonoBehaviour {
 		Vector2 rectangleTransformOfPoint;
 		Vector2 clickVector;
 		Vector2 reference = new Vector2 (0f, 1f) - new Vector2 (0f, 0f);
-		float angle;
 		Vector2 forwardAngle = new Vector2 (0f, 1f) - new Vector2 (0f, 0f);
 		if (Input.GetMouseButtonDown (0)) {
 			mousePositon = Input.mousePosition;

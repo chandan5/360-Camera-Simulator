@@ -2,9 +2,16 @@
 using System.Collections;
 
 public class BarrelsScript : MonoBehaviour {
+
 	public GameObject barrelPrefab;
-	private GameObject[] barrels = new GameObject[12];
 	public Canvas canvas;
+
+	private GameObject[] barrels = new GameObject[12];
+	private GameObject barrel;
+	private ClickBarrel[] clickBarrel;
+	private int activateUI = 0;
+	private angleScript angScript;
+	private float[] angle = new float[12];
 
 	// Use this for initialization
 	void Start () {
@@ -13,7 +20,12 @@ public class BarrelsScript : MonoBehaviour {
 		randomPlacement (12f, 255f, 250f, 485f, 6, 9);
 		randomPlacement (255f, 255f, 485f, 485f, 9, 12);
 		canvas.enabled = false;
+
+		clickBarrel = gameObject.GetComponentsInChildren<ClickBarrel> ();
+		angScript = canvas.GetComponentInChildren<angleScript> ();
+	
 	}
+
 
 	private void randomPlacement(float lowX,float lowZ,float highX,float highZ,int indexLow, int indexHigh){
 		Collider[] colliders;
@@ -27,11 +39,28 @@ public class BarrelsScript : MonoBehaviour {
 				colliders = Physics.OverlapSphere (position, 1.0F);
 			}
 			barrels [i] = Instantiate (barrelPrefab, position - new Vector3(0.0F,7.0F,0.0F), Quaternion.identity) as GameObject;
+			barrels[i].name = i.ToString();
 		}
 	}
 
 	// Update is called once per frame
 	void Update () {
-		
+		int selectedBarrelIndex;
+		foreach (ClickBarrel clicked in clickBarrel) {
+			if(clicked.barrelFound == 1){
+				barrel = clicked.gameObject;
+				activateUI = 1;
+				canvas.enabled = true;
+				clicked.barrelFound = 0;
+				selectedBarrelIndex = int.Parse(clicked.gameObject.name);
+				if(angScript.angle != 9999f){
+					angle[selectedBarrelIndex] = angScript.angle;
+				}else{
+					Debug.Log("Error in angleScript!");
+				}
+				break;
+			}
+		}
+
 	}
 }

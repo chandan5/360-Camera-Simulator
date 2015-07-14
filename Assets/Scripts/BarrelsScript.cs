@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class BarrelsScript : MonoBehaviour {
 
@@ -7,11 +8,15 @@ public class BarrelsScript : MonoBehaviour {
 	public Canvas canvas;
 	public Material redColorBarrelMaterial;
 
+	private List<float> angle;
+	private List<string> orderOfSelection;
+	
+	private MeshRenderer meshRenderer;
+
 	private GameObject[] barrels = new GameObject[12];
-	private GameObject barrel;
-	private ClickBarrel[] clickBarrel;
+	private GameObject selectedBarrel;
+	private ClickBarrel[] clickedBarrel;
 	private angleScript angScript;
-	private float[] angle = new float[12];
 
 	// Use this for initialization
 	void Start () {
@@ -21,7 +26,7 @@ public class BarrelsScript : MonoBehaviour {
 		randomPlacement (255f, 255f, 485f, 485f, 9, 12);
 		canvas.enabled = false;
 
-		clickBarrel = gameObject.GetComponentsInChildren<ClickBarrel> ();
+		clickedBarrel = gameObject.GetComponentsInChildren<ClickBarrel> ();
 		angScript = canvas.GetComponentInChildren<angleScript> ();
 	
 	}
@@ -40,34 +45,41 @@ public class BarrelsScript : MonoBehaviour {
 			}
 			barrels [i] = Instantiate (barrelPrefab, position - new Vector3(0.0F,7.0F,0.0F), Quaternion.identity) as GameObject;
 			barrels[i].name = i.ToString();
+//			barrels[i].layer = 9;
 		}
 	}
 
-	void changeColor(GameObject blueBarrel){
-		MeshRenderer mesh = blueBarrel.GetComponentInChildren<MeshRenderer> ();
-		mesh.material = redColorBarrelMaterial;
+	void MoveToLayer(Transform root, int layer) {
+		root.gameObject.layer = layer;
+		foreach(Transform child in root)
+			MoveToLayer(child, layer);
 	}
 
 	// Update is called once per frame
 	void Update () {
 		int selectedBarrelIndex;
-		foreach (ClickBarrel clicked in clickBarrel) {
+		foreach (ClickBarrel clicked in clickedBarrel) {
 			if(clicked.barrelFound == 1){
-				barrel = clicked.gameObject;
+				selectedBarrel = clicked.gameObject;
 				canvas.enabled = true;
 				clicked.barrelFound = 0;
-				selectedBarrelIndex = int.Parse(clicked.gameObject.name);
-				if(angScript.angle != 9999f){
-					angle[selectedBarrelIndex] = angScript.angle;
-				}else{
-					Debug.Log("Error in angleScript!");
+				float clickAngle = new float();
+				clickAngle = angScript.angle;
+				if (clickAngle != 9999f){
+					Debug.Log("Copying angle from angleScripts");
+					angle.Add (clickAngle);
+					orderOfSelection.Add(clicked.gameObject.name);
 				}
-				changeColor(barrel);
-				barrel.layer = 8;
+				else 
+					Debug.Log("Error with angleScript.cs!");
+
+				Debug.Log("Changing layer of selected barrel from barrel to environment");
+				MoveToLayer(clicked.gameObject.transform,8);
 				clicked.barrelFound = 0;
+				meshRenderer = clicked.gameObject.GetComponentInChildren<MeshRenderer>();
+				meshRenderer.material = redColorBarrelMaterial;
 				break;
 			}
 		}
-
 	}
 }

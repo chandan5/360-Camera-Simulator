@@ -3,7 +3,7 @@ using System.Collections;
 
 public class angleScript : MonoBehaviour {
 	private RectTransform rectangle;
-	public float angle;
+	public float angle = new float();
 	// Use this for initialization
 	void Start () {
 //		Debug.Log ("The gameobject coordinates are " + gameObject.transform.position);
@@ -22,12 +22,15 @@ public class angleScript : MonoBehaviour {
 		if (Input.GetMouseButtonDown (0)) {
 			mousePositon = Input.mousePosition;
 			RectTransformUtility.ScreenPointToLocalPointInRectangle( rectangle, mousePositon , null,out rectangleTransformOfPoint);
-//			Debug.Log("The rect corrdinates are " + rectangleTransformOfPoint);
-			clickVector = rectangleTransformOfPoint - new Vector2(0f,0f);
-			angle = Vector2.Angle(reference,clickVector);
-			Debug.Log("The angle is " + angle);
-			canvas = GetComponentInParent<Canvas>();
-			canvas.enabled = false;
+			Debug.Log("The rect corrdinates are " + rectangleTransformOfPoint);
+
+			if(RectTransformUtility.RectangleContainsScreenPoint(rectangle,mousePositon,null) == true){
+				clickVector = rectangleTransformOfPoint - new Vector2(0f,0f);
+				angle = Vector2.Angle(reference,clickVector);
+				Debug.Log("The angle is " + angle);
+				canvas = GetComponentInParent<Canvas>();
+				canvas.enabled = false;
+			}
 		}
 	
 	}

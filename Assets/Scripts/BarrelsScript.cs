@@ -64,8 +64,8 @@ public class BarrelsScript : MonoBehaviour {
 				canvas.enabled = true;
 				clicked.barrelFound = 0;
 				float clickAngle = new float();
-				clickAngle = angScript.angle;
-				if (clickAngle != 9999f){
+				if (angScript.angle != 9999f){
+					clickAngle = angScript.angle;
 					Debug.Log("Copying angle from angleScripts");
 					angle.Add (clickAngle);
 					orderOfSelection.Add(clicked.gameObject.name);
@@ -77,7 +77,7 @@ public class BarrelsScript : MonoBehaviour {
 				MoveToLayer(clicked.gameObject.transform,8);
 				clicked.barrelFound = 0;
 				meshRenderer = clicked.gameObject.GetComponentInChildren<MeshRenderer>();
-				meshRenderer.material = redColorBarrelMaterial;
+				meshRenderer.material = new Material(redColorBarrelMaterial); 
 				break;
 			}
 		}

@@ -8,13 +8,13 @@ public class BarrelsScript : MonoBehaviour {
 	public Canvas canvas;
 	public Material redColorBarrelMaterial;
 
-	private List<float> angle;
-	private List<string> orderOfSelection;
+	private List<float> estimatedAngles = new List<float>();
+	private List<string> orderOfSelection = new List<string>();
+	private int count = 0;
 	
-	private MeshRenderer meshRenderer;
 
 	private GameObject[] barrels = new GameObject[12];
-	private GameObject selectedBarrel;
+
 	private ClickBarrel[] clickedBarrel;
 	private angleScript angScript;
 
@@ -39,45 +39,44 @@ public class BarrelsScript : MonoBehaviour {
 			position = new Vector3 (Random.Range (lowX, highX), 0.0f, Random.Range (lowZ, highZ));
 			colliders = Physics.OverlapSphere (position, 1.0F);
 			while (colliders.Length != 0) {
-				Debug.Log ("that place is taken!");
 				position = new Vector3 (Random.Range (lowX, highX), 7.0f, Random.Range (lowZ, highZ));
 				colliders = Physics.OverlapSphere (position, 1.0F);
 			}
 			barrels [i] = Instantiate (barrelPrefab, position - new Vector3(0.0F,7.0F,0.0F), Quaternion.identity) as GameObject;
 			barrels[i].name = i.ToString();
-//			barrels[i].layer = 9;
 		}
 	}
 
 	void MoveToLayer(Transform root, int layer) {
+		Debug.Log ("I'm in the layer function!");
 		root.gameObject.layer = layer;
 		foreach(Transform child in root)
 			MoveToLayer(child, layer);
 	}
 
 	// Update is called once per frame
-	void Update () {
-		int selectedBarrelIndex;
+	void FixedUpdate () {
+		float estimation = new float();
+		Transform transformObject;
 		foreach (ClickBarrel clicked in clickedBarrel) {
 			if(clicked.barrelFound == 1){
-				selectedBarrel = clicked.gameObject;
 				canvas.enabled = true;
-				clicked.barrelFound = 0;
-				float clickAngle = new float();
-				if (angScript.angle != 9999f){
-					clickAngle = angScript.angle;
-					Debug.Log("Copying angle from angleScripts");
-					angle.Add (clickAngle);
-					orderOfSelection.Add(clicked.gameObject.name);
-				}
-				else 
-					Debug.Log("Error with angleScript.cs!");
+				if(angScript.angle != 9999f){
+					estimation = angScript.angle;
+					estimatedAngles.Add(estimation);
+					orderOfSelection.Add(clicked.returnBarrel().gameObject.name);
 
-				Debug.Log("Changing layer of selected barrel from barrel to environment");
-				MoveToLayer(clicked.gameObject.transform,8);
-				clicked.barrelFound = 0;
-				meshRenderer = clicked.gameObject.GetComponentInChildren<MeshRenderer>();
-				meshRenderer.material = new Material(redColorBarrelMaterial); 
+					angScript.angle = 9999f;
+
+//					Destroy(clicked.returnBarrel());
+					clicked.returnBarrel().layer = 8;
+					clicked.returnBarrel().gameObject.GetComponentInChildren<Transform>().gameObject.layer = 8;
+					clicked.returnBarrel().gameObject.GetComponentInChildren<MeshRenderer>().material = redColorBarrelMaterial;
+
+
+					canvas.enabled = false;
+					clicked.barrelFound = 0;
+				}
 				break;
 			}
 		}

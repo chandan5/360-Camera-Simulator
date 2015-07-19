@@ -2,44 +2,46 @@
 using System.Collections;
 
 public class MapScript : MonoBehaviour {
-	public GameObject barrelPrefab;
-	public Camera camera;
-	private GameObject[] barrels = new GameObject[12];
 	public Canvas canvas;
-	private int counter = 0;
-
-	// Use this for initialization
-	void Start () {
-		for(int i = 0;i < 12 ; i++){
-			barrels[i] = Instantiate(barrelPrefab,new Vector3(0f,0f,0f),Quaternion.identity) as GameObject;
-		}
+	public GameObject BarrelPrefab;
+	
+	private GameObject[] barrels = new GameObject[12];
+	private Vector3[] positions;
+	private Camera camera;
+	private int count;
+	
+	void Start() {
+		count = 0;
+		camera = gameObject.GetComponent<Camera> ();
 		canvas.enabled = false;
 	}
-
-	public void confirm(string answer){
-		if (counter < 11) {
-			if (answer == "Y")
-				counter = counter + 1;
-			else if (answer == "N")
-				;
-		} else {
-			Debug.Log("Done!");
+	
+	public void confirmPosition(string answer){
+		if (answer == "Y") {
+			canvas.enabled = false;
+		} else if (answer == "N") {
+			count = count - 1;
+			Destroy(barrels[count].gameObject);
+			barrels[count] = new GameObject();
+			canvas.enabled = false;
 		}
-		canvas.enabled = false;
+		
+		
 	}
-
-	// Update is called once per frame
-	void FixedUpdate () {
+	public int returnCount(){
+		return count;
+	}
+	
+	void Update() {
 		Vector3 mousePosition = Input.mousePosition;
-		mousePosition.z = 450f;
-		if (Input.GetMouseButtonDown (0) && (counter <= 11)) {
+		mousePosition.z = gameObject.transform.position.z;
+		if(count == 11){
+			Debug.Log("You're done!");
+		}else if (Input.GetMouseButtonDown (0) && canvas.enabled == false) {
 			Debug.Log (camera.ScreenToWorldPoint (mousePosition));
-			Debug.Log("Current counter value :: "+ counter);
-			barrels[counter].transform.Translate(camera.ScreenToWorldPoint(mousePosition));
+			barrels[count] = Instantiate(BarrelPrefab, camera.ScreenToWorldPoint (mousePosition) ,Quaternion.identity) as GameObject;
+			count = count + 1;
 			canvas.enabled = true;
-			if(counter == 11){
-				canvas.enabled = false;	
-			}
 		}
 	}
 }

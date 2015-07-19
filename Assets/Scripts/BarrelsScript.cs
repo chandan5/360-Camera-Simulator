@@ -53,6 +53,9 @@ public class BarrelsScript : MonoBehaviour {
 		foreach(Transform child in root)
 			MoveToLayer(child, layer);
 	}
+	void CreateLogFiles(){
+		Debug.Log ("This is log files section");
+	}
 
 	// Update is called once per frame
 	void FixedUpdate () {
@@ -68,7 +71,6 @@ public class BarrelsScript : MonoBehaviour {
 
 					angScript.angle = 9999f;
 
-//					Destroy(clicked.returnBarrel());
 					clicked.returnBarrel().layer = 8;
 					clicked.returnBarrel().gameObject.GetComponentInChildren<Transform>().gameObject.layer = 8;
 					clicked.returnBarrel().gameObject.GetComponentInChildren<MeshRenderer>().material = redColorBarrelMaterial;
@@ -76,9 +78,14 @@ public class BarrelsScript : MonoBehaviour {
 
 					canvas.enabled = false;
 					clicked.barrelFound = 0;
+					count++;
 				}
 				break;
 			}
 		}
+		if (count == 11) {
+			CreateLogFiles();
+		}
+
 	}
 }

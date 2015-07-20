@@ -4,8 +4,11 @@ using UnityEngine.UI;
 
 public class MapCounterScript : MonoBehaviour {
 	private Text counter;
-	MapScript mapScript;
-	GameObject camera;
+	private MapScript mapScript;
+
+	public GameObject camera;
+
+
 	// Use this for initialization
 	void Start () {
 		counter = gameObject.GetComponent<Text> ();
@@ -15,6 +18,6 @@ public class MapCounterScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		counter.text = mapScript.returnCount ().ToString();
+		counter.text = "barrel No : "+mapScript.returnCount ().ToString();
 	}
 }

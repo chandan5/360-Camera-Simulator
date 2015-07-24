@@ -2,7 +2,6 @@
 using System.Collections;
 
 public class BehaviourScript : MonoBehaviour {
-	public float horizontalSpeed = 2.0F;
 	public float speed = 10.0F;
 	void Update() {
 		float verticalTranslation = Input.GetAxis("Vertical") * speed;
@@ -10,10 +9,8 @@ public class BehaviourScript : MonoBehaviour {
 		
 		verticalTranslation *= Time.deltaTime;
 		horizontalTranslation *= Time.deltaTime;
-		
 		transform.Translate(0, 0, verticalTranslation*20);
 		transform.Translate(horizontalTranslation*20, 0, 0);
-//		float h = horizontalSpeed * Input.GetAxis("Mouse X");
-//		transform.Rotate(0, h, 0);
+
 	}
 }

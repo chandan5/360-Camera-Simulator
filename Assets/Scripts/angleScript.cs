@@ -13,20 +13,23 @@ public class angleScript : MonoBehaviour {
 
 
 	public void CalculateAngle(){
-		Debug.Log ("I'm in Calculate Angle now!");
-		Canvas canvas;
+//		Debug.Log ("I'm in Calculate Angle");
 		Vector2 mousePositon;
 		Vector2 rectangleTransformOfPoint;
 		Vector2 clickVector;
 		Vector2 reference = new Vector2 (0f, 1f) - new Vector2 (0f, 0f);
-		Vector2 forwardAngle = new Vector2 (0f, 1f) - new Vector2 (0f, 0f);
 		mousePositon = Input.mousePosition;
 
 		RectTransformUtility.ScreenPointToLocalPointInRectangle (rectangle, mousePositon, null, out rectangleTransformOfPoint);
 
 		if (RectTransformUtility.RectangleContainsScreenPoint (rectangle, mousePositon, null) == true) {
 			clickVector = rectangleTransformOfPoint - new Vector2 (0f, 0f);
-			angle = Vector2.Angle (reference, clickVector);
+//			angle = Vector2.Angle (reference, clickVector);
+			if(rectangleTransformOfPoint.x < 0){
+				angle = -(Vector2.Angle (reference, clickVector));
+			}
+			else 
+				angle = Vector2.Angle (reference, clickVector);
 		}
 	}
 

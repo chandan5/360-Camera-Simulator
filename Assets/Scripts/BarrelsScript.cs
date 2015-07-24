@@ -9,6 +9,7 @@ public class BarrelsScript : MonoBehaviour {
 	public Material redColorBarrelMaterial;
 
 	private List<float> estimatedAngles = new List<float>();
+	private List<float> actualAngles = new List<float> ();
 	private List<string> orderOfSelection = new List<string>();
 	private int count = 0;
 	
@@ -53,8 +54,14 @@ public class BarrelsScript : MonoBehaviour {
 		foreach(Transform child in root)
 			MoveToLayer(child, layer);
 	}
-	void CreateLogFiles(){
-		Debug.Log ("This is log files section");
+	
+	public GameObject[] returnBarrelsArray(){
+		return barrels;	
+	}
+	public void returnLists(out List<float> estimation, out List<float> actual, out List<string> order){
+		estimation = estimatedAngles;
+		actual = actualAngles;
+		order = orderOfSelection;
 	}
 
 	// Update is called once per frame
@@ -68,6 +75,7 @@ public class BarrelsScript : MonoBehaviour {
 					estimation = angScript.angle;
 					estimatedAngles.Add(estimation);
 					orderOfSelection.Add(clicked.returnBarrel().gameObject.name);
+					actualAngles.Add( Vector3.Angle ( (new Vector3(0f,0f,1f) - new Vector3(0f,0f,0f)) , (clicked.returnBarrel().gameObject.transform.position - gameObject.transform.position) ) );
 
 					angScript.angle = 9999f;
 
@@ -84,7 +92,8 @@ public class BarrelsScript : MonoBehaviour {
 			}
 		}
 		if (count == 11) {
-			CreateLogFiles();
+			LogScript.setStatus(1);
+			Application.LoadLevel(2);
 		}
 
 	}

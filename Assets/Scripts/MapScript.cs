@@ -4,7 +4,8 @@ using System.Collections;
 public class MapScript : MonoBehaviour {
 	public Canvas canvas;
 	public GameObject BarrelPrefab;
-	
+
+	private GameObject prevCamera;
 	private GameObject[] barrels = new GameObject[12];
 	private Vector3[] positions;
 	private Camera camera;
@@ -14,6 +15,8 @@ public class MapScript : MonoBehaviour {
 		count = 0;
 		camera = gameObject.GetComponent<Camera> ();
 		canvas.enabled = false;
+		prevCamera = GameObject.Find ("Welcome Camera");
+		Debug.Log (prevCamera.name);
 	}
 	
 	public void confirmPosition(string answer){
@@ -40,6 +43,7 @@ public class MapScript : MonoBehaviour {
 		}else if (Input.GetMouseButtonDown (0) && canvas.enabled == false) {
 			Debug.Log (camera.ScreenToWorldPoint (mousePosition));
 			barrels[count] = Instantiate(BarrelPrefab, camera.ScreenToWorldPoint (mousePosition) ,Quaternion.identity) as GameObject;
+			positions[count] = camera.ScreenToWorldPoint (mousePosition);
 			count = count + 1;
 			canvas.enabled = true;
 		}

@@ -17,6 +17,7 @@ public class MapScript : MonoBehaviour {
 		canvas.enabled = false;
 		prevCamera = GameObject.Find ("Welcome Camera");
 		Debug.Log (prevCamera.name);
+		prevCamera.SetActive (false);
 	}
 	
 	public void confirmPosition(string answer){

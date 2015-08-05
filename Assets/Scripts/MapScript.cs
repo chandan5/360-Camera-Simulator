@@ -7,17 +7,18 @@ public class MapScript : MonoBehaviour {
 
 	private GameObject prevCamera;
 	private GameObject[] barrels = new GameObject[12];
-	private Vector3[] positions;
+	private Vector3[] positions = new Vector3[12];
 	private Camera camera;
 	private int count;
 	
 	void Start() {
 		count = 0;
 		camera = gameObject.GetComponent<Camera> ();
+
 		canvas.enabled = false;
+
 		prevCamera = GameObject.Find ("Welcome Camera");
-		Debug.Log (prevCamera.name);
-		prevCamera.SetActive (false);
+
 	}
 	
 	public void confirmPosition(string answer){
@@ -42,6 +43,7 @@ public class MapScript : MonoBehaviour {
 		if(count == 11){
 			Debug.Log("You're done!");
 		}else if (Input.GetMouseButtonDown (0) && canvas.enabled == false) {
+			Debug.Log("The count is" + count);
 			Debug.Log (camera.ScreenToWorldPoint (mousePosition));
 			barrels[count] = Instantiate(BarrelPrefab, camera.ScreenToWorldPoint (mousePosition) ,Quaternion.identity) as GameObject;
 			positions[count] = camera.ScreenToWorldPoint (mousePosition);

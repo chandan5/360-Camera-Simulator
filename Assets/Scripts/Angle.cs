@@ -2,14 +2,15 @@
 using System.Collections;
 
 public class Angle : MonoBehaviour {
-	private Canvas canvas;
+
 	public GameObject image;
 	private RectTransform rectangle;
+//	private Canvas canvas;
 	
 	void Start() {
 		rectangle = image.GetComponent<RectTransform> ();
-		canvas = gameObject.GetComponent<Canvas> ();
-		//		gameObject.SetActive (false);
+//		canvas = gameObject.GetComponent<Canvas> ();
+//		gameObject.SetActive (false);
 		Debug.Log ("World cooridinate of canvas "+gameObject.transform.position);
 		Debug.Log ("World coordinate of image " + image.transform.position);
 	}

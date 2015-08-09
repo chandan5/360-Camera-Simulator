@@ -13,7 +13,6 @@ public class BarrelsScript : MonoBehaviour {
 	private List<string> orderOfSelection = new List<string>();
 	private int count = 0;
 	
-
 	private GameObject[] barrels = new GameObject[12];
 
 	private ClickBarrel[] clickedBarrel;
@@ -67,7 +66,7 @@ public class BarrelsScript : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 		float estimation = new float();
-		Transform transformObject;
+		float estimate;
 		foreach (ClickBarrel clicked in clickedBarrel) {
 			if(clicked.barrelFound == 1){
 				canvas.enabled = true;
@@ -75,14 +74,16 @@ public class BarrelsScript : MonoBehaviour {
 					estimation = angScript.angle;
 					estimatedAngles.Add(estimation);
 					orderOfSelection.Add(clicked.returnBarrel().gameObject.name);
-					actualAngles.Add( Vector3.Angle ( (new Vector3(0f,0f,1f) - new Vector3(0f,0f,0f)) , (clicked.returnBarrel().gameObject.transform.position - gameObject.transform.position) ) );
+					estimate = Vector3.Angle ( (new Vector3(0f,0f,1f) - new Vector3(0f,0f,0f)) , (clicked.returnBarrel().gameObject.transform.position - gameObject.transform.position) );
+					if(clicked.returnBarrel().gameObject.transform.position.x < gameObject.transform.position.x )
+						estimate = -estimate;
+					actualAngles.Add( estimate );
 
 					angScript.angle = 9999f;
 
 					clicked.returnBarrel().layer = 8;
 					clicked.returnBarrel().gameObject.GetComponentInChildren<Transform>().gameObject.layer = 8;
 					clicked.returnBarrel().gameObject.GetComponentInChildren<MeshRenderer>().material = redColorBarrelMaterial;
-
 
 					canvas.enabled = false;
 					clicked.barrelFound = 0;

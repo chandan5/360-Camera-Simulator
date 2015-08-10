@@ -6,6 +6,7 @@ using System.IO;
 public class MapScript : MonoBehaviour {
 	public Canvas canvas;
 	public GameObject BarrelPrefab;
+	public Material yellowMaterial;
 
 	private GameObject prevCamera;
 	private GameObject[] barrels = new GameObject[12];
@@ -13,6 +14,8 @@ public class MapScript : MonoBehaviour {
 	private Vector3[] positions = new Vector3[12];
 	private Camera camera;
 	private int count;
+	private string playerName;
+	private string cameraName;
 	
 	void Start() {
 		count = 0;
@@ -33,7 +36,9 @@ public class MapScript : MonoBehaviour {
 	
 	public void confirmPosition(string answer){
 		if (answer == "Y") {
+			barrels[count - 1].GetComponentInChildren<MeshRenderer>().material = yellowMaterial;
 			canvas.enabled = false;
+
 		} else if (answer == "N") {
 			count = count - 1;
 			Destroy (barrels [count].gameObject);
@@ -51,9 +56,30 @@ public class MapScript : MonoBehaviour {
 			positions2d[i] = new Vector2(positions[i].x,positions[i].z);
 		}
 
-		StreamWriter sw = 
+		LogScript.returnNames (out cameraName,out playerName);
 
+		if(Directory.Exists("./GAMELOGS/"+cameraName))
+			Debug.Log("Directory already exits!");
+		else 
+			Directory.CreateDirectory("./GAMELOGS/"+cameraName);
 
+		StreamWriter sw = new StreamWriter ("./GAMELOGS/" + cameraName + "/" + playerName + "MapTask.txt");
+		sw.WriteLine ("DISTANCES MATCHED CLOSEST TO EACH OTHER\nACTUAL BARREL POSITION\t\tPLAYER MAPPED POSITION\n");
+		for (int i=0; i < barrelPositions.Count; i++) {
+			float distance = 99999f;
+			int posIndex = 999;
+			for(int j=0;j<barrelPositions.Count;i++){
+				float temp;
+				temp = (barrelPositions2d[i] - positions2d[j]).magnitude;
+				if(temp<distance){
+					distance = temp;
+					posIndex = j;
+				}
+			}
+			sw.WriteLine(barrelPositions2d[i]+"\t\t"+positions2d[posIndex]);
+			positions2d[posIndex].x = 999f;
+			positions2d[posIndex].y = 999f;
+		}
 	}
 
 	public int returnCount(){
@@ -64,8 +90,10 @@ public class MapScript : MonoBehaviour {
 		Vector3 mousePosition = Input.mousePosition;
 		mousePosition.z = gameObject.transform.position.z;
 		if(count == barrelPositions.Count){
+//		if(count == 12){
 			Debug.Log("You're done!");
 			MapLog();
+			count = count + 1;
 			Application.Quit();
 		}else if (Input.GetMouseButtonDown (0) && canvas.enabled == false) {
 			Debug.Log("The count is" + count);

@@ -8,6 +8,8 @@ public class LogScript : MonoBehaviour {
 
 	private GameObject WelcomeCam;
 	private static int  allDone = 0;
+	private static string playerName;
+	private static string cameraName;
 
 	private BarrelsScript barrelsScript;
 	private TimerScript timerScript;
@@ -32,6 +34,9 @@ public class LogScript : MonoBehaviour {
 		WelcomeCam = GameObject.Find ("Welcome Camera");
 		WelcomeCam.SetActive (false);
 
+		playerName = WelcomeCam.GetComponent<WelcomeScript> ().returnName ();
+		cameraName = gameObject.name;
+
 		timerScript = timerText.GetComponent<TimerScript> ();
 
 		for(int i = 0;i<12;i++){
@@ -44,6 +49,11 @@ public class LogScript : MonoBehaviour {
 		allDone = status;
 	}
 
+	public static void returnNames(out string camera,out string player){
+		camera = cameraName;
+		player = playerName;
+	}
+
 	public static void returnBarrelPositions(out List<Vector3> positions){
 		positions = barrelPositions;
 	}
@@ -52,12 +62,12 @@ public class LogScript : MonoBehaviour {
 		if (allDone == 1) {
 			timerScript.returnAllPositions(out allPositions);
 
-			if(Directory.Exists("./GAMELOGS"+gameObject.name))
+			if(Directory.Exists("./GAMELOGS/"+cameraName))
 				Debug.Log("Directory already exits!");
 			else 
-				Directory.CreateDirectory("./GAMELOGS"+gameObject.name);
+				Directory.CreateDirectory("./GAMELOGS/"+cameraName);
 
-			StreamWriter sw = new StreamWriter("./GAMELOGS"+gameObject.name+"/"+WelcomeCam.name+"Angles.txt",false);
+			StreamWriter sw = new StreamWriter("./GAMELOGS/"+cameraName+"/"+playerName+"Angles.txt",false);
 			sw.WriteLine("ESTIMATED ANGLES\tACTUAL ANGLES\tBARREL ID");
 			for(int i=0; i < estimatedAngles.Count ; i++ ){
 				sw.WriteLine(estimatedAngles[i]+" \t"+actualAngles[i]+"\t"+orderOfSelection[i]);
@@ -72,7 +82,7 @@ public class LogScript : MonoBehaviour {
 			}
 			sw.Close();
 
-			sw = new StreamWriter("./GAMELOGS"+gameObject.name+"/"+WelcomeCam.name+"AllPositions.txt",false);
+			sw = new StreamWriter("./GAMELOGS/"+cameraName+"/"+playerName+"AllPositions.txt",false);
 			sw.WriteLine("All postions taken at each second\n-----------------------------------------------\n");
 			for (int i = 0;i<allPositions.Count;i++){
 				sw.WriteLine(allPositions[i]);

@@ -1,10 +1,13 @@
 fileFormatVersion: 2
 guid: a192d67dfc62d414bb61e7a1650e6251
-timeCreated: 1436247471
+timeCreated: 1439177839
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - canvas: {instanceID: 0}
+  - BarrelPrefab: {fileID: 173064, guid: a57393598ae53be4b9a93f10f75065ab, type: 2}
+  - yellowMaterial: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

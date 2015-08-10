@@ -92,7 +92,7 @@ public class BarrelsScript : MonoBehaviour {
 				break;
 			}
 		}
-		if (count == 11) {
+		if (count == 12 || Input.GetKeyDown(KeyCode.P)) {
 			LogScript.setStatus(1);
 			Application.LoadLevel(2);
 		}

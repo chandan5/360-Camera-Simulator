@@ -3,8 +3,19 @@ guid: c699c52516deb403b8af95f3353fa916
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
+    100000: //RootNode
+    100002: FrenchClassicCar_2
+    100004: Glas
+    400000: //RootNode
+    400002: FrenchClassicCar_2
+    400004: Glas
+    2300000: FrenchClassicCar_2
+    2300002: Glas
+    3300000: FrenchClassicCar_2
+    3300002: Glas
     4300000: Glas
     4300002: FrenchClassicCar_2
+    11100000: //RootNode
   materials:
     importMaterials: 1
     materialName: 3
@@ -14,6 +25,10 @@ ModelImporter:
     bakeSimulation: 0
     optimizeGameObjects: 0
     motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
     animationCompression: 1
     animationRotationError: .5
     animationPositionError: .5

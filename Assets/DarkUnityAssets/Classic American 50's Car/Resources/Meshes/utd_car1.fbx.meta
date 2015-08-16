@@ -3,8 +3,21 @@ guid: b60e63387bbe74a638a7b1e1c4e70b99
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
+    100000: Particle_View_01
+    100002: //RootNode
+    100004: utd_car1
+    100006: utd_car1_glass
+    400000: Particle_View_01
+    400002: //RootNode
+    400004: utd_car1
+    400006: utd_car1_glass
+    2300000: utd_car1
+    2300002: utd_car1_glass
+    3300000: utd_car1
+    3300002: utd_car1_glass
     4300000: utd_car1
     4300002: utd_car1_glass
+    11100000: //RootNode
   materials:
     importMaterials: 1
     materialName: 3
@@ -14,6 +27,10 @@ ModelImporter:
     bakeSimulation: 0
     optimizeGameObjects: 0
     motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
     animationCompression: 1
     animationRotationError: .5
     animationPositionError: .5

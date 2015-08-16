@@ -7,11 +7,13 @@ public class TS : MonoBehaviour {
 	private float startTime;
 	private Text text;
 
+	private bool logTimeUp;
 	private int lastMinute;
 	private int lastSecond;
 
 	// Use this for initialization
 	void Start () {
+		logTimeUp = false;
 		text = gameObject.GetComponentInChildren<Text> ();
 		startTime = Time.time;
 	}
@@ -19,6 +21,10 @@ public class TS : MonoBehaviour {
 	public void returnTimeTaken(out int minute,out int second){
 		minute = lastMinute;
 		second = lastSecond;
+	}
+
+	public bool timeUp(){
+		return logTimeUp;
 	}
 
 	// Update is called once per frame
@@ -33,5 +39,9 @@ public class TS : MonoBehaviour {
 
 		lastMinute = minutes;
 		lastSecond = seconds;
+
+		if (lastMinute == 12) {
+			logTimeUp = true;
+		}
 	}
 }

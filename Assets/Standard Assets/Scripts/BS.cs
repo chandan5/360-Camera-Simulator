@@ -9,7 +9,7 @@ public class BS : MonoBehaviour {
 	public GameObject compass;
 
 	private bool startLogging;
-	private int count = 0;
+	private static int count = 0;
 	private static Vector3[] spawnPositions = new Vector3[12];
 	private BehaviourScript behaviour;
 	private ANG ang;
@@ -37,8 +37,6 @@ public class BS : MonoBehaviour {
 		randomPlacement (12f, 255f, 250f, 485f, 6, 9);
 		randomPlacement (255f, 255f, 485f, 485f, 9, 12);
 		componentCameraCB = gameObject.GetComponentsInChildren<CB> ();
-
-				
 	}
 
 	public static Vector3[] getSpawnPositions(){
@@ -71,12 +69,20 @@ public class BS : MonoBehaviour {
 		return enableCompass;
 	}
 
+	public static int returnCount(){
+		return count;
+	}
+
 	public bool canLog(){
 		return startLogging;
 	}
 
 	public void setEnableCompass(bool enable){
 		enableCompass = enable;
+	}
+
+	public void returnPathLog(out List<Vector3> path){
+		path = LogPositions;
 	}
 
 	private float calculateActualAngle(){
@@ -123,6 +129,9 @@ public class BS : MonoBehaviour {
 			estimatedAngles.Add(ang.getAngle());
 		}
 		if (count == 12) {
+			startLogging = true;
+		}
+		if (Input.GetKeyDown (KeyCode.P)) {
 			startLogging = true;
 		}
 	}

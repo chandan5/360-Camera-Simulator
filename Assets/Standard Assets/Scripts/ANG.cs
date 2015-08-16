@@ -18,6 +18,7 @@ public class ANG : MonoBehaviour {
 		compassImage = gameObject.GetComponentInChildren<Image> ();
 		compassImage.enabled = false;
 		angleCalculated = false;
+
 		bsInAng = gameCamera.GetComponent<BS> ();
 		compassRectangle = gameObject.GetComponentsInChildren<RectTransform> ()[1];
 		angle = 999f;

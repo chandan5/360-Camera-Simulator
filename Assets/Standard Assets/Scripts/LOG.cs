@@ -20,12 +20,13 @@ public class LOG : MonoBehaviour {
 	void Start () {
 		nameOfCamType = gameObject.name;
 		logged = true;
+		bsInLog = gameObject.GetComponent<BS> ();
+		tsScript = compassTimer.GetComponent<TS> ();
 		if(Directory.Exists("./GAMELOGS/"+WS.returnPlayerName()+"/"+gameObject.name))
 			Debug.Log("Directory already exists!");
 		else 
 			Directory.CreateDirectory("./GAMELOGS/"+WS.returnPlayerName()+"/"+gameObject.name);
-		bsInLog = gameObject.GetComponent<BS> ();
-		tsScript = compassTimer.GetComponent<TS> ();
+
 	}
 
 	public static string returnCamType(){

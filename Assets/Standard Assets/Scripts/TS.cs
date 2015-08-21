@@ -40,8 +40,13 @@ public class TS : MonoBehaviour {
 		lastMinute = minutes;
 		lastSecond = seconds;
 
+		if (Input.GetKeyDown (KeyCode.T)) {
+			lastMinute = 12;
+		}
+
 		if (lastMinute == 12) {
 			logTimeUp = true;
+			Application.LoadLevel(2);
 		}
 	}
 }

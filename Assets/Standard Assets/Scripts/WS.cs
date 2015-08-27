@@ -33,6 +33,5 @@ public class WS : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-	
 	}
 }

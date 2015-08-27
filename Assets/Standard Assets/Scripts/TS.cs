@@ -34,8 +34,12 @@ public class TS : MonoBehaviour {
 
 		int seconds = (int)timeTaken % 60;
 		int minutes = (int)timeTaken / 60;
-
-		text.text = minutes.ToString () + " min " + seconds.ToString () + " sec";
+		if (Input.GetKeyDown (KeyCode.M)) {
+			if(text.text == "")
+				text.text = minutes.ToString () + " min " + seconds.ToString () + " sec";
+			else
+				text.text = "";
+		}
 
 		lastMinute = minutes;
 		lastSecond = seconds;

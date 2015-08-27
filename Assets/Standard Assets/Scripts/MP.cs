@@ -90,6 +90,10 @@ public class MP : MonoBehaviour {
 				placedCount = placedCount + 1;
 				enableDialog = true;
 			}
+			if(Input.GetKeyDown(KeyCode.L)){
+				MapLog();
+				Application.Quit();
+			}
 		}
 	}
 }
